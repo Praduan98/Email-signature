@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InsightsTap — Signature Maker</title>
+<style>
+:root{
+  --bg:#0A1416; --panel:#0E1B1E; --panel2:#132528; --line:#1D3135; --lineHi:#2A4A4F;
+  --txt:#E4F0F1; --dim:#8FA8AD; --dimmer:#5C787D;
+  --teal:#0DCFCF; --tealDeep:#0A9E9E; --tealInk:#04292A;
+  --sans:'Segoe UI',-apple-system,'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(1100px 600px at 85% -15%,rgba(13,207,207,.10),transparent 60%)}
+
+header{display:flex;align-items:center;gap:14px;padding:0 26px;height:60px;
+  border-bottom:1px solid var(--line);background:rgba(10,20,22,.85);backdrop-filter:blur(12px);
+  position:sticky;top:0;z-index:20}
+header img{width:25px;height:25px}
+header h1{margin:0;font-size:15px;font-weight:600;letter-spacing:.2px}
+header h1 span{color:var(--dimmer);font-weight:400}
+
+.shell{display:grid;grid-template-columns:370px minmax(0,1fr);align-items:start}
+.form{padding:26px 24px 60px;border-right:1px solid var(--line)}
+.out{padding:26px 28px 60px;min-width:0}
+
+.step{display:flex;align-items:center;gap:9px;margin:0 0 16px;font-size:12px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.step b{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;
+  background:var(--teal);color:var(--tealInk);font-size:11px}
+.step + .step{margin-top:30px}
+
+label{display:block;margin:0 0 6px;font-size:12.5px;font-weight:600;color:var(--dim)}
+label i{font-style:normal;font-weight:400;color:var(--dimmer)}
+input{width:100%;padding:11px 13px;margin:0 0 14px;color:var(--txt);background:var(--panel);
+  border:1px solid var(--line);border-radius:5px;font-family:var(--sans);font-size:15px;
+  transition:border-color .15s,box-shadow .15s}
+input::placeholder{color:var(--dimmer)}
+input:hover{border-color:var(--lineHi)}
+input:focus{outline:none;background:var(--panel2);border-color:var(--tealDeep);
+  box-shadow:0 0 0 3px rgba(13,207,207,.14)}
+.bad input{border-color:#FF7A6B}
+.err{display:none;margin:-9px 0 13px;font-size:12px;color:#FF9C8E}
+.bad .err{display:block}
+
+.picks{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:18px}
+.picks button{cursor:pointer;padding:13px 8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:5px;color:var(--dim);font-family:var(--sans);font-size:13px;font-weight:600;
+  transition:border-color .15s,background .15s,color .15s}
+.picks button:hover{border-color:var(--lineHi);color:var(--txt)}
+.picks button[aria-pressed=true]{border-color:var(--tealDeep);background:var(--panel2);color:var(--txt);
+  box-shadow:inset 0 0 20px rgba(13,207,207,.10)}
+.picks small{display:block;margin-top:3px;font-size:11px;font-weight:400;color:var(--dimmer)}
+
+.paper{background:#fff;border-radius:6px;padding:34px 30px;overflow-x:auto;
+  box-shadow:0 26px 60px -32px rgba(0,0,0,.85)}
+
+.go{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;cursor:pointer;padding:14px 22px;border-radius:5px;
+  border:1px solid var(--line);background:var(--panel);color:var(--txt);font-family:var(--sans);
+  font-size:14px;font-weight:600;transition:background .15s,border-color .15s}
+.btn:hover{background:var(--panel2);border-color:var(--lineHi)}
+.btn.main{background:var(--teal);border-color:var(--teal);color:var(--tealInk);font-size:15px}
+.btn.main:hover{background:#2BE3E3;border-color:#2BE3E3}
+.btn.done{background:#0E3B2A;border-color:#1C6B4A;color:#7FE8B0}
+
+.next{margin-top:22px;padding:16px 18px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.next h3{margin:0 0 8px;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.next p{margin:0 0 7px;font-size:13.5px;color:var(--dim);line-height:1.6}
+.next p:last-child{margin-bottom:0}
+.next b{color:var(--txt)}
+
+details{margin-top:16px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+summary{cursor:pointer;padding:13px 16px;font-size:13px;font-weight:600;color:var(--dim);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'▸ ';color:var(--teal)}
+details[open] summary::before{content:'▾ '}
+details p{margin:0;padding:0 16px 15px;font-size:13px;color:var(--dim);line-height:1.6}
+details code{background:var(--panel2);padding:2px 5px;border-radius:3px;font-size:12px;color:#9FE9E9}
+
+#buf{position:fixed;top:0;left:-100000px;width:640px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);padding:13px 22px;
+  background:var(--panel2);border:1px solid var(--lineHi);border-radius:5px;font-size:14px;font-weight:600;
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:960px){.shell{grid-template-columns:1fr}.form{border-right:0;border-bottom:1px solid var(--line)}}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="__MARK_TEAL__" alt="">
+  <h1>Signature Maker <span>· InsightsTap</span></h1>
+</header>
+
+<div class="shell">
+  <div class="form">
+    <p class="step"><b>1</b> Your details</p>
+
+    <div id="f-name">
+      <label>Full name</label>
+      <input id="i-name" type="text" placeholder="Anirban Bhattacharya" autocomplete="name">
+      <div class="err">Please enter a name</div>
+    </div>
+    <div id="f-role">
+      <label>Designation</label>
+      <input id="i-role" type="text" placeholder="Chief Operating Officer">
+      <div class="err">Please enter a designation</div>
+    </div>
+    <div id="f-email">
+      <label>Email address</label>
+      <input id="i-email" type="email" placeholder="anirban@insightstap.com" spellcheck="false">
+      <div class="err">That doesn't look like an email address</div>
+    </div>
+
+    <label>Phone <i>— optional, leave blank to hide</i></label>
+    <input id="i-phone" type="tel" placeholder="+91 98765 43210">
+
+    <label>Website <i>— optional</i></label>
+    <input id="i-web" type="text" placeholder="insightstap.com" spellcheck="false">
+
+    <label>LinkedIn <i>— optional</i></label>
+    <input id="i-li" type="text" placeholder="linkedin.com/in/username" spellcheck="false">
+  </div>
+
+  <div class="out">
+    <p class="step"><b>2</b> Pick a design</p>
+    <div class="picks" id="picks">
+      <button type="button" data-t="crest">Crest<small>Letterhead</small></button>
+      <button type="button" data-t="ribbon">Ribbon<small>Name-led</small></button>
+      <button type="button" data-t="split">Split<small>Card</small></button>
+      <button type="button" data-t="quiet">Quiet<small>Minimal</small></button>
+    </div>
+
+    <p class="step"><b>3</b> Copy it</p>
+    <div class="paper"><div id="host"></div></div>
+
+    <div class="go">
+      <button class="btn main" id="copy" type="button">Copy signature</button>
+      <button class="btn" id="dl" type="button">Save as file</button>
+    </div>
+
+    <div class="next">
+      <h3>Now paste it into your email</h3>
+      <p><b>Gmail</b> — Settings (gear) → See all settings → General → Signature → Create new → paste → set it for <b>New emails</b> and <b>On reply/forward</b> → Save Changes at the bottom.</p>
+      <p><b>Outlook (web)</b> — Settings → Mail → Compose and reply → New signature → paste → Save.</p>
+      <p><b>Apple Mail</b> — Mail → Settings → Signatures → “+” → paste, then <b>untick</b> “Always match my default message font”.</p>
+    </div>
+
+    <details>
+      <summary>Using Outlook on Windows? Read this first</summary>
+      <p>The old Outlook desktop app for Windows blocks built-in images, so the logo will show as a broken box. Ask whoever runs your website to upload the matching PNG from the <code>assets</code> folder, then tick the box below and paste the address.
+      <br><br>
+      <label style="margin-top:10px">Logo web address</label>
+      <input id="i-url" type="text" placeholder="https://insightstap.com/email/mark.png" spellcheck="false">
+      Leave this blank unless you are on Outlook for Windows.</p>
+    </details>
+  </div>
+</div>
+
+<div id="buf" aria-hidden="true"></div>
+<div class="toast" id="toast">Copied</div>
+
+<script>
+/* ═══ design engine — generated from build/signatures.mjs ═══ */
+__ENGINE__
+
+/* ═══ app ═══ */
+const TPL = {
+  crest : { fn: tplCrest,  mark: 'white' },
+  ribbon: { fn: tplRibbon, mark: 'round' },
+  split : { fn: tplSplit,  mark: 'white' },
+  quiet : { fn: tplQuiet,  mark: 'round' }
+};
+
+const SAMPLE = { name:'', role:'', email:'', phone:'', web:'insightstap.com', li:'', url:'', tpl:'crest' };
+const KEY = 'insightstap.sigmaker.v1';
+let ST = load();
+
+function load(){
+  let s = {...SAMPLE};
+  try{ const r = localStorage.getItem(KEY); if(r) s = {...SAMPLE, ...JSON.parse(r)}; }catch(e){}
+  if(!TPL[s.tpl]) s.tpl = SAMPLE.tpl;
+  return s;
+}
+const $ = id => document.getElementById(id);
+const shadow = $('host').attachShadow({mode:'open'});
+
+function data(){
+  const t = TPL[ST.tpl];
+  const hosted = ST.url.trim();
+  return {
+    name:  ST.name.trim()  || 'Your Full Name',
+    role:  ST.role.trim()  || 'Your Designation',
+    email: ST.email.trim() || 'you@insightstap.com',
+    phone: ST.phone.trim(),
+    web:   webParts(ST.web),
+    li:    liParts(ST.li),
+    tagline: 'GTM Engineering / Marketing Automation',
+    logo:      hosted || MARKS[t.mark],
+    markWhite: hosted || MARKS.white
+  };
+}
+const html = () => TPL[ST.tpl].fn(data()).replace(/\n\s*\n/g,'\n').trim();
+
+function render(){
+  shadow.innerHTML = '<style>:host{all:initial;display:block}</style>' + html();
+  document.querySelectorAll('#picks button').forEach(b =>
+    b.setAttribute('aria-pressed', String(b.dataset.t === ST.tpl)));
+  [['f-name', ST.name.trim().length>0, 'i-name'],
+   ['f-role', ST.role.trim().length>0, 'i-role'],
+   ['f-email', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ST.email.trim()), 'i-email']
+  ].forEach(([id, ok, inp]) => {
+    $(id).classList.toggle('bad', !ok && $(inp).value.length > 0);
+  });
+  try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){}
+}
+
+const FIELDS = {'i-name':'name','i-role':'role','i-email':'email','i-phone':'phone',
+                'i-web':'web','i-li':'li','i-url':'url'};
+Object.entries(FIELDS).forEach(([id,k]) => {
+  const el = $(id); el.value = ST[k] ?? '';
+  el.addEventListener('input', () => { ST[k] = el.value; render(); });
+});
+$('picks').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return; ST.tpl = b.dataset.t; render();
+});
+
+let tt;
+function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show');
+  clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2400); }
+
+$('copy').addEventListener('click', async e => {
+  const h = html(), btn = e.currentTarget;
+  let ok = false;
+  try{
+    if(navigator.clipboard && window.ClipboardItem && window.isSecureContext){
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html' : new Blob([h], {type:'text/html'}),
+        'text/plain': new Blob([$('host').shadowRoot.textContent.trim()], {type:'text/plain'})
+      })]);
+      ok = true;
+    }
+  }catch(err){}
+  if(!ok){
+    const buf = $('buf'); buf.innerHTML = h;
+    const r = document.createRange(); r.selectNodeContents(buf);
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    try{ ok = document.execCommand('copy'); }catch(err){}
+    sel.removeAllRanges(); buf.innerHTML = '';
+  }
+  if(ok){
+    btn.classList.add('done'); btn.textContent = 'Copied ✓';
+    setTimeout(()=>{ btn.classList.remove('done'); btn.textContent = 'Copy signature'; }, 1900);
+    toast('Copied — now paste it into your email settings');
+  } else {
+    toast('Copy blocked by the browser — use “Save as file” instead');
+  }
+});
+
+$('dl').addEventListener('click', () => {
+  const doc = '<!doctype html><html><head><meta charset="utf-8"><title>'
+    + (ST.name.trim() || 'InsightsTap signature')
+    + '</title></head><body style="margin:0;padding:30px;background:#fff;">\n' + html() + '\n</body></html>';
+  const slug = (ST.name.trim() || 'signature').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const url = URL.createObjectURL(new Blob([doc], {type:'text/html'}));
+  const link = document.createElement('a');
+  link.href = url; link.download = slug + '-' + ST.tpl + '.html';
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 3000);
+  toast('Saved to your Downloads folder');
+});
+
+render();
+</script>
+</body>
+</html>

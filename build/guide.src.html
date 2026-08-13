@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InsightsTap · Email Signature Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080F11; --panel:#0C1618; --panel-2:#101E21; --panel-3:#152A2E;
+  --line:#1A2B2F; --line-hi:#26474C;
+  --txt:#E1EDEE; --dim:#94ABB0; --dimmer:#638085;
+  --accent:#0DCFCF; --accent-deep:#0A9E9E; --accent-ink:#052A2B;
+  --warn:#E8C07A; --good:#7FE8B0;
+  --sans:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'Azeret Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --r:3px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:var(--sans); font-size:15px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(1200px 640px at 84% -14%, rgba(13,207,207,.11), transparent 62%),
+    radial-gradient(760px 520px at -6% 104%, rgba(13,207,207,.055), transparent 60%);
+  background-attachment:fixed;
+}
+.mesh{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.019) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.019) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(circle at 50% 16%, #000 24%, transparent 78%);
+          mask-image:radial-gradient(circle at 50% 16%, #000 24%, transparent 78%);
+}
+.wrap{position:relative; z-index:1}
+
+.bar{position:sticky; top:0; z-index:30; display:flex; align-items:center; gap:16px;
+  padding:0 30px; height:62px; border-bottom:1px solid var(--line);
+  background:rgba(8,15,17,.84); backdrop-filter:blur(14px) saturate(1.3)}
+.bar img{width:26px;height:26px}
+.bar h1{margin:0; font-family:var(--mono); font-size:11.5px; font-weight:600;
+  letter-spacing:.24em; text-transform:uppercase}
+.bar h1 em{font-style:normal; color:var(--dimmer)}
+.bar a.tool{margin-left:auto; text-decoration:none; padding:9px 15px; border-radius:var(--r);
+  background:var(--accent); color:var(--accent-ink);
+  font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+  transition:background .16s}
+.bar a.tool:hover{background:#2BE3E3}
+
+main{max-width:1080px; margin:0 auto; padding:56px 30px 100px}
+
+.hero{margin-bottom:64px}
+.eyebrow{font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.28em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:20px}
+.hero h2{margin:0 0 20px; font-size:46px; line-height:1.08; font-weight:800; letter-spacing:-1.4px}
+.hero h2 span{color:var(--accent)}
+.hero p{margin:0; max-width:64ch; font-size:17px; color:var(--dim)}
+
+section{margin-bottom:62px; scroll-margin-top:80px}
+h3.sec{display:flex; align-items:center; gap:14px; margin:0 0 8px;
+  font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.26em;
+  text-transform:uppercase; color:var(--accent)}
+h3.sec::after{content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--line-hi),transparent)}
+h4{margin:0 0 8px; font-size:21px; font-weight:700; letter-spacing:-.3px}
+.lede{margin:0 0 26px; max-width:70ch; color:var(--dim)}
+
+p{margin:0 0 14px}
+a{color:var(--accent)}
+strong{color:var(--txt); font-weight:600}
+em{color:var(--dim)}
+code{font-family:var(--mono); font-size:12.5px; background:var(--panel-3); color:#9FE9E9;
+  padding:2px 6px; border-radius:2px; word-break:break-word}
+
+.card{border:1px solid var(--line); border-radius:6px; background:var(--panel); padding:22px 24px}
+.grid{display:grid; gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(380px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+
+/* start-here callout */
+.start{display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:center;
+  border:1px solid var(--accent-deep); border-radius:6px; padding:26px 28px;
+  background:linear-gradient(120deg, rgba(13,207,207,.10), rgba(13,207,207,.02) 60%);
+  box-shadow:0 24px 60px -34px rgba(13,207,207,.6)}
+.start .n{font-family:var(--mono); font-size:38px; font-weight:600; color:var(--accent); line-height:1}
+.start h4{margin:0 0 6px}
+.start p{margin:0; color:var(--dim)}
+.start code{background:rgba(13,207,207,.14)}
+
+/* design showcase */
+.design{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:6px;
+  background:var(--panel); overflow:hidden}
+.design .shot{height:168px; padding:20px; background:#fff; border-bottom:1px solid var(--line)}
+.design .shot img{display:block; width:100%; height:100%; object-fit:contain}
+.design .body{display:flex; flex-direction:column; flex:1; padding:18px 20px 20px}
+.design .who{margin-top:auto; padding-top:4px}
+.design .tag{display:flex; align-items:center; gap:9px; margin-bottom:9px}
+.design .idx{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; color:var(--dimmer)}
+.design .nm{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--txt)}
+.design .w{margin-left:auto; font-family:var(--mono); font-size:9.5px; color:var(--dimmer)}
+.design p{margin:0 0 10px; font-size:13.5px; color:var(--dim); line-height:1.6}
+.design .who{font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent)}
+
+/* steps */
+.step{border:1px solid var(--line); border-radius:6px; background:var(--panel); padding:20px 22px}
+.step .h{display:flex; align-items:baseline; gap:10px; margin-bottom:12px}
+.step .h b{font-family:var(--mono); font-size:9.5px; letter-spacing:.14em; color:var(--dimmer)}
+.step .h span{font-size:16px; font-weight:700; letter-spacing:-.2px}
+ol.tight, ul.tight{margin:0; padding-left:19px; color:var(--dim); font-size:13.5px; line-height:1.72}
+ol.tight li, ul.tight li{margin-bottom:5px}
+ol.tight li::marker{color:var(--accent); font-family:var(--mono); font-size:11px}
+ul.tight li::marker{color:var(--accent-deep)}
+
+/* table */
+.tbl{width:100%; border-collapse:collapse; font-size:13.5px}
+.tbl th{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line-hi);
+  font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--accent)}
+.tbl td{padding:12px 14px; border-bottom:1px solid var(--line); color:var(--dim); vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:first-child{color:var(--txt); font-weight:600; white-space:nowrap}
+.yes{color:var(--good)} .no{color:var(--warn)}
+
+/* notice */
+.notice{display:flex; gap:14px; padding:18px 20px; border-radius:6px;
+  border:1px solid #4A3A1E; background:rgba(255,183,77,.06)}
+.notice.info{border-color:var(--line-hi); background:rgba(13,207,207,.05)}
+.notice .ic{flex:none; width:22px; height:22px; border-radius:50%; display:grid; place-items:center;
+  background:rgba(232,192,122,.16); color:var(--warn);
+  font-family:var(--mono); font-size:12px; font-weight:600}
+.notice.info .ic{background:rgba(13,207,207,.16); color:var(--accent)}
+.notice p{margin:0; font-size:13.5px; color:var(--dim)}
+.notice p + p{margin-top:8px}
+.notice b{color:var(--txt)}
+
+/* rules */
+.rules{display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:16px}
+.rules .col{border:1px solid var(--line); border-radius:6px; background:var(--panel); padding:20px 22px}
+.rules .col.ok{border-color:#1C6B4A}
+.rules .col.no{border-color:#5A3A34}
+.rules h5{margin:0 0 12px; font-family:var(--mono); font-size:9.5px; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase}
+.rules .col.ok h5{color:var(--good)} .rules .col.no h5{color:#FF9C8E}
+
+/* files */
+.files{font-family:var(--mono); font-size:12.5px; line-height:2; color:var(--dim)}
+.files .d{color:var(--accent)}
+.files .f{color:var(--txt)}
+.files .c{color:var(--dimmer)}
+
+footer{border-top:1px solid var(--line); padding:26px 30px; text-align:center;
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--dimmer)}
+
+@media (max-width:640px){
+  main{padding:40px 20px 70px}
+  .hero h2{font-size:32px; letter-spacing:-.8px}
+  .start{grid-template-columns:1fr; gap:14px}
+  .bar{padding:0 18px} .bar h1 em{display:none}
+}
+</style>
+</head>
+<body>
+<div class="mesh"></div>
+<div class="wrap">
+
+<header class="bar">
+  <img src="__MARK_TEAL__" alt="">
+  <h1>Signature Guide <em>/ InsightsTap</em></h1>
+  <a class="tool" href="signature-builder.html">Open the builder →</a>
+</header>
+
+<main>
+
+  <div class="hero">
+    <div class="eyebrow">Internal · Brand &amp; Communications</div>
+    <h2>Three signatures.<br>One <span>brand</span>. Zero fiddling.</h2>
+    <p>Pick a layout, type your name, designation and email, then copy it straight into your mail client. Everything here runs offline in your browser — nothing is uploaded, and nothing needs installing.</p>
+  </div>
+
+  <!-- ══ START ══ -->
+  <section id="start">
+    <h3 class="sec">Start here</h3>
+    <div class="start">
+      <div class="n">→</div>
+      <div>
+        <h4>Open <code>signature-builder.html</code></h4>
+        <p>Double-click the file. Fill in the form on the left, choose one of the three layouts at the top, then press <strong>Copy signature</strong> and paste into your mail client. That is the whole job — about ninety seconds.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ DESIGNS ══ -->
+  <section id="designs">
+    <h3 class="sec">The three layouts</h3>
+    <h4>Pick the one that matches how you use email</h4>
+    <p class="lede">All three carry identical brand elements — same mark, same teal, same type scale. They differ in footprint and formality, not in branding. Any of them is correct; there is no “default” you are expected to choose.</p>
+
+    <div class="grid g3">
+      <div class="design">
+        <div class="shot"><img src="__SHOT_LEDGER__" alt="Ledger layout preview"></div>
+        <div class="body">
+          <div class="tag"><span class="idx">01</span><span class="nm">Ledger</span><span class="w">460px</span></div>
+          <p>The mark sits top-right and the name leads at full width, with contacts set as a labelled grid instead of a run-on line. Calm and corporate.</p>
+          <div class="who">Leadership · client-facing</div>
+        </div>
+      </div>
+      <div class="design">
+        <div class="shot"><img src="__SHOT_STACK__" alt="Stack layout preview"></div>
+        <div class="body">
+          <div class="tag"><span class="idx">02</span><span class="nm">Stack</span><span class="w">290px</span></div>
+          <p>A narrow vertical lockup with the mark and wordmark on top. The lightest footprint — it stays tidy in long reply chains and on phones.</p>
+          <div class="who">Heavy email · mobile-first</div>
+        </div>
+      </div>
+      <div class="design">
+        <div class="shot"><img src="__SHOT_KEYSTONE__" alt="Keystone layout preview"></div>
+        <div class="body">
+          <div class="tag"><span class="idx">03</span><span class="nm">Keystone</span><span class="w">430px</span></div>
+          <p>A bordered card with a teal band and a tinted tagline strip. The most branded and the most visible in a crowded inbox.</p>
+          <div class="who">Marketing · sales · BD</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ LOGO DELIVERY ══ -->
+  <section id="logo">
+    <h3 class="sec">One real decision</h3>
+    <h4>Embedded logo, or hosted URL?</h4>
+    <p class="lede">This is the only setting that can go wrong, and it is worth thirty seconds of attention. The builder defaults to <strong>Embed</strong>, which is right for most people.</p>
+
+    <div class="card" style="padding:0; overflow:hidden">
+      <table class="tbl">
+        <tr><th>Mode</th><th>How it works</th><th>Use it when</th></tr>
+        <tr>
+          <td>Embed</td>
+          <td>The logo travels inside the signature as data. No server, no broken-image box, works offline. Adds roughly 2&nbsp;KB per email.</td>
+          <td class="yes">Gmail, Outlook on the web, Apple Mail, Outlook for Mac — <strong>the default</strong>.</td>
+        </tr>
+        <tr>
+          <td>Hosted URL</td>
+          <td>The logo is fetched from a web address each time the email is opened.</td>
+          <td class="no">Outlook <strong>classic desktop on Windows</strong>, which strips embedded images.</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="notice" style="margin-top:18px">
+      <div class="ic">!</div>
+      <div>
+        <p><b>If your team uses Outlook classic on Windows,</b> IT needs to publish one PNG first. Upload <code>assets/insightstap-mark-round.png</code> (or the square/open variant) to a public path such as <code>https://insightstap.com/email/mark.png</code>, then switch the builder to <strong>Hosted URL</strong> and paste that address.</p>
+        <p>It must be a <strong>PNG</strong>. The company site currently serves the mark only as <code>.webp</code>, which Outlook cannot display — so do not link to that file.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ INSTALL ══ -->
+  <section id="install">
+    <h3 class="sec">Install</h3>
+    <h4>Where to paste it</h4>
+    <p class="lede">Copy from the builder first, then follow the four lines for your client. In every case you are pasting into a rich-text box — use <code>⌘V</code> / <code>Ctrl+V</code>, never “paste as plain text”.</p>
+
+    <div class="grid g2">
+      <div class="step">
+        <div class="h"><b>A</b><span>Gmail &amp; Google Workspace</span></div>
+        <ol class="tight">
+          <li>Gear icon → <strong>See all settings</strong></li>
+          <li>Scroll to <strong>Signature</strong> → <strong>Create new</strong>, name it</li>
+          <li>Click into the box and paste</li>
+          <li>Under <strong>Signature defaults</strong>, set it for both <em>New emails</em> and <em>On reply/forward</em></li>
+          <li><strong>Save Changes</strong> at the bottom — easy to miss</li>
+        </ol>
+      </div>
+
+      <div class="step">
+        <div class="h"><b>B</b><span>Outlook on the web / new Outlook</span></div>
+        <ol class="tight">
+          <li>Gear icon → <strong>Mail</strong> → <strong>Compose and reply</strong></li>
+          <li><strong>New signature</strong>, give it a name</li>
+          <li>Paste into the editor</li>
+          <li>Select it for <em>New messages</em> and <em>Replies/forwards</em>, then <strong>Save</strong></li>
+        </ol>
+      </div>
+
+      <div class="step">
+        <div class="h"><b>C</b><span>Outlook classic — Windows desktop</span></div>
+        <ol class="tight">
+          <li>Switch the builder to <strong>Hosted URL</strong> first (see above)</li>
+          <li><strong>File</strong> → <strong>Options</strong> → <strong>Mail</strong> → <strong>Signatures…</strong></li>
+          <li><strong>New</strong>, name it, paste into the edit box</li>
+          <li>Set the dropdowns for <em>New messages</em> and <em>Replies/forwards</em> → <strong>OK</strong></li>
+        </ol>
+      </div>
+
+      <div class="step">
+        <div class="h"><b>D</b><span>Apple Mail — macOS</span></div>
+        <ol class="tight">
+          <li><strong>Mail</strong> → <strong>Settings</strong> → <strong>Signatures</strong></li>
+          <li>Pick your account, click <strong>+</strong></li>
+          <li>Select the placeholder text and paste over it</li>
+          <li><strong>Untick “Always match my default message font”</strong> — otherwise Apple Mail flattens the styling</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="notice info" style="margin-top:18px">
+      <div class="ic">i</div>
+      <div><p><b>iPhone and iPad</b> cannot paste formatted signatures reliably — the Mail app strips styling. Either leave the mobile signature as plain text, or use the Gmail/Outlook mobile apps, which sync the signature you set on the web.</p></div>
+    </div>
+  </section>
+
+  <!-- ══ HAND EDIT ══ -->
+  <section id="handedit">
+    <h3 class="sec">Alternative</h3>
+    <h4>Editing the raw files by hand</h4>
+    <p class="lede">If you would rather not use the builder — or IT wants to roll signatures out centrally — the three files in <code>templates/</code> are plain, paste-ready email HTML.</p>
+
+    <div class="card">
+      <p style="margin-top:0">Open any of them in a text editor and change four things. Each file carries the same instructions in a comment at the top.</p>
+      <ul class="tight">
+        <li><code>Your Full Name</code> → the person's name</li>
+        <li><code>Your Designation</code> → the job title</li>
+        <li><code>you@insightstap.com</code> → appears <strong>twice</strong>: inside <code>href="mailto:…"</code> and again as the visible text. Change both.</li>
+        <li><code>+91 00000 00000</code> → same pattern, inside <code>href="tel:…"</code> and as visible text. Delete the whole <code>&lt;tr&gt;</code> row to drop the phone line.</li>
+      </ul>
+      <p style="margin-bottom:0">Copy everything between the <code>SIGNATURE BEGIN</code> and <code>SIGNATURE END</code> comments, or just open the file in a browser and copy the rendered result.</p>
+    </div>
+  </section>
+
+  <!-- ══ RULES ══ -->
+  <section id="rules">
+    <h3 class="sec">House rules</h3>
+    <h4>What is yours to change, and what is not</h4>
+    <p class="lede">The point of a shared signature is that fifty of them look like one company. Personal fields are yours; brand elements are not.</p>
+
+    <div class="rules">
+      <div class="col ok">
+        <h5>✓ Yours to change</h5>
+        <ul class="tight">
+          <li>Name, designation, email address</li>
+          <li>Phone, website, LinkedIn — or leave them blank to hide the line entirely</li>
+          <li>Which of the three layouts you use</li>
+          <li>Which logo mark: round, square or open</li>
+        </ul>
+      </div>
+      <div class="col no">
+        <h5>✕ Please leave alone</h5>
+        <ul class="tight">
+          <li>Colours, fonts and type sizes</li>
+          <li>The InsightsTap mark — no recolouring, stretching or substituting</li>
+          <li>Quotes, mottos, and “Sent from my…” lines</li>
+          <li>Legal disclaimers, unless Legal has asked for one</li>
+          <li>Social icon rows, banners and animated GIFs — they trip spam filters and age badly</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHAT CHANGED ══ -->
+  <section id="changed">
+    <h3 class="sec">Design notes</h3>
+    <h4>What changed from the old signature</h4>
+    <p class="lede">For anyone who wants the reasoning rather than just the file.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h5 style="margin:0 0 8px; font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent)">Legibility</h5>
+        <p style="margin:0; font-size:13.5px; color:var(--dim)">The old designation line used brand teal <code>#0DCFCF</code> on white — a contrast ratio of <strong>1.94:1</strong>, well under the 4.5:1 accessibility floor. That is why it read as faint. Bright teal is now reserved for the mark, rules and separators; text teal is <code>#087A7D</code> at <strong>5.13:1</strong>, which passes WCAG AA.</p>
+      </div>
+      <div class="card">
+        <h5 style="margin:0 0 8px; font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent)">Weight</h5>
+        <p style="margin:0; font-size:13.5px; color:var(--dim)">The original logo file was <strong>90&nbsp;KB at 512px</strong> for a slot about 60px wide. The marks here are <strong>1.4–2.5&nbsp;KB</strong> at the size they are actually displayed, so they can ride inside the email instead of depending on a server.</p>
+      </div>
+      <div class="card">
+        <h5 style="margin:0 0 8px; font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent)">Structure</h5>
+        <p style="margin:0; font-size:13.5px; color:var(--dim)">The old version stacked a vertical teal rule and a horizontal rule around a cramped contact block, with a stray <code>--</code> delimiter above it. <strong>None of the three layouts reuse that skeleton</strong> — the mark moves right, moves on top, or sits inside a card, and no layout uses a vertical rule. Each one leads with the name and uses a single organising device.</p>
+      </div>
+      <div class="card">
+        <h5 style="margin:0 0 8px; font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent)">Durability</h5>
+        <p style="margin:0; font-size:13.5px; color:var(--dim)">Everything is nested tables with inline styles — no flexbox, no grid, no stylesheet, no reliance on <code>border-radius</code>. That is deliberately old-fashioned, and it is what keeps the layout intact in Outlook, which renders email through Word.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TROUBLESHOOTING ══ -->
+  <section id="fix">
+    <h3 class="sec">Troubleshooting</h3>
+    <h4>If something looks wrong</h4>
+    <div class="card" style="padding:0; overflow:hidden">
+      <table class="tbl">
+        <tr><th>Symptom</th><th>Cause and fix</th></tr>
+        <tr><td>Logo shows as a broken box</td><td>You are on Outlook classic for Windows, or you used <strong>Hosted URL</strong> with an address that is not publicly reachable. Switch to <strong>Embed</strong>, or publish a real PNG and use its address.</td></tr>
+        <tr><td>Everything pasted as plain text</td><td>The paste was plain-text only. Use <code>⌘V</code> / <code>Ctrl+V</code> rather than <code>⌘⇧V</code>. In Apple Mail, also untick <em>Always match my default message font</em>.</td></tr>
+        <tr><td>Fonts look different to the preview</td><td>Expected, and fine. Email uses whatever fonts are on the reader's machine. The stacks fall back Georgia → Times and Helvetica → Arial, so it stays on-brand everywhere.</td></tr>
+        <tr><td>Spacing collapsed in Outlook</td><td>Something was re-typed or reflowed inside Outlook's editor. Paste a fresh copy from the builder and do not edit it in place.</td></tr>
+        <tr><td>Copy button does nothing</td><td>Some browsers block clipboard access on local files. Open the <strong>HTML source</strong> panel, select all of it, copy manually — or use <strong>Download .html</strong>, open that file and copy the rendered signature.</td></tr>
+        <tr><td>Phone number turned blue on iPhone</td><td>iOS auto-links phone numbers. The templates pre-link them in brand colour, which prevents this in most cases; where it persists, it is client behaviour and cannot be overridden.</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══ FILES ══ -->
+  <section id="files">
+    <h3 class="sec">What is in the folder</h3>
+    <div class="card">
+      <div class="files">
+        <div><span class="f">signature-builder.html</span> <span class="c">— the tool. Self-contained; works offline. Start here.</span></div>
+        <div><span class="f">signature-guide.html</span> <span class="c">— this page.</span></div>
+        <div><span class="d">templates/</span></div>
+        <div>&nbsp;&nbsp;<span class="f">01-ledger.html</span> <span class="c">— raw email HTML, hand-editable</span></div>
+        <div>&nbsp;&nbsp;<span class="f">02-stack.html</span> <span class="c">— raw email HTML, hand-editable</span></div>
+        <div>&nbsp;&nbsp;<span class="f">03-keystone.html</span> <span class="c">— raw email HTML, hand-editable</span></div>
+        <div><span class="d">assets/</span></div>
+        <div>&nbsp;&nbsp;<span class="f">insightstap-mark-round.png</span> <span class="c">— 160px, 2.5 KB — upload this one for hosted mode</span></div>
+        <div>&nbsp;&nbsp;<span class="f">insightstap-mark-square.png</span> <span class="c">— 160px, 1.4 KB</span></div>
+        <div>&nbsp;&nbsp;<span class="f">insightstap-mark-teal.png</span> <span class="c">— 160px, 2.1 KB — open mark, transparent</span></div>
+        <div><span class="d">logo/</span> <span class="c">— original source artwork, untouched</span></div>
+        <div><span class="d">build/</span> <span class="c">— generation scripts and previews; ignore unless regenerating</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>InsightsTap · Brand &amp; Communications · Signature system v1</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Debug screenshots and transient render output — regenerated on demand
+build/shots/
+build/shots.json
+build/probe.html
+build/worst.html
+build/q.html
+
+# Editor / OS
+.vscode/
+.DS_Store
