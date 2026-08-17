@@ -459,7 +459,7 @@ const TEMPLATES = {
    What separates the four is arrangement, not decoration — which is itself
    the lesson of six rejections: Letterhead leads with the house, Stacked
    leads with the person and gives every contact its own line, Imprint lets
-   the house sign off at the foot with no rule anywhere, Quiet says the least
+   the house sign off at the foot under a hairline, Quiet says the least
    it can. Mark position and rule count differ in all four; no two repeat.
    ══════════════════════════════════════════════════════════════════════ */
 
@@ -681,45 +681,73 @@ function tplStacked(d){
    block is completely bare — which is the opposite of Letterhead and the
    reason this arrangement earns a slot next to it.
 
-   It is the only design in the set with no rule at all. The gap above the
-   imprint does the dividing, so nothing here can be pointed at and called a
-   device. The mark holds the left margin on that last line, which is what
-   stops a bottom-anchored mark reading as a stray attachment: the block
-   closes on the same edge it opened on.
+   A hairline sits above the imprint, at the team's request — it was originally
+   the one design in the set with no rule at all, and the gap alone did the
+   dividing. The rule makes the sign-off read as a distinct closing group
+   rather than as two lines that drifted to the bottom, and it is still only a
+   hairline, so nothing here can be pointed at and called a device. The mark
+   holds the left margin on that last line, which is what stops a
+   bottom-anchored mark reading as a stray attachment: the block closes on the
+   same edge it opened on.
 
-   Set against Stacked, every lever is different — mark at the foot rather
-   than on the company line, no rule rather than one — while both stack their
-   contacts, which is the visible difference from the chained pair.        */
+   Its contact lines carry the printed-stationery initials — E, T, W — also at
+   the team's request. Note what this is NOT: the labels are inline prefixes on
+   the same line as their value, not a gutter column. Register set them in a
+   column and was rejected for it. Keeping them to one or two characters means
+   the values align on their own, with nothing to align them.
+
+   Set against Stacked, every lever still differs — mark at the foot rather
+   than on the company line, the rule below the contacts rather than above
+   them, labelled lines rather than bare ones.                             */
 function tplImprint(d){
   const G    = 18;
   const tag  = tagline(d.tagline, K.faint, K.ruleHi);
   const meet = meetLink(d, K.teal);
 
-  const line = (html, pb) =>
-    `<tr><td colspan="2" style="padding:0 0 ${pb}px 0; font-family:${S}; font-size:${Z.meta}px; line-height:${Z.metaLh}px; mso-line-height-rule:exactly; color:${K.meta};">${html}</td></tr>`;
+  /* Every contact line is prefixed with the terse initial used on printed
+     letterheads — E, P, W — set in the faint grey so the label recedes and the
+     value reads first. Kept to one or two characters on purpose: at that width
+     the values line up on their own, without a label column to align them.
+     A label column is what Register used, and Register was rejected.
+
+     A one-character label would still start its value ~8px left of a
+     two-character one. An extra non-breaking space after the short labels
+     closes most of that, which is as far as this can be taken without a real
+     label column — and a column is the thing to avoid here. */
+  const lab = (l, v) =>
+    `<span style="color:${K.faint};">${l}:</span>${l.length === 1 ? '&nbsp;&nbsp;' : '&nbsp;'}${v}`;
+
+  const line = (html, size, lh, pb) =>
+    `<tr><td colspan="2" style="padding:0 0 ${pb}px 0; font-family:${S}; font-size:${size}px; line-height:${lh}px; mso-line-height-rule:exactly; color:${K.meta};">${html}</td></tr>`;
 
   /* The imprint sits further off the block when a tagline follows it, so the
      two read as one closing group rather than as two stray lines. */
-  const sp = tag ? 22 : 18;
+  const sp = tag ? 20 : 16;
 
-  const items = [];
-  if(d.phone) items.push(a(telHref(d.phone), d.phone, K.meta, 'white-space:nowrap;'));
-  if(d.web)   items.push(a(d.web.href, d.web.label, K.meta, 'white-space:nowrap;'));
-  if(d.li)    items.push(a(d.li.href, d.li.label, K.meta, 'white-space:nowrap;'));
-  if(d.wa)    items.push(a(d.wa.href, 'WhatsApp', K.meta, 'white-space:nowrap;'));
-  if(d.news)  items.push(a(d.news.href, d.news.label, K.meta, 'white-space:nowrap;'));
-  if(d.yt)    items.push(a(d.yt.href, d.yt.label, K.meta, 'white-space:nowrap;'));
-  const stack = items.map((h,i)=>line(h, i===items.length-1 ? 0 : 2)).join('');
+  /* The address keeps its own size and weight — it is the primary datum — so
+     it is written out here rather than taken from mailCell, which cannot carry
+     a label. mailLabel() is still used, because the invisible break point it
+     inserts after the @ is the only thing that stops a long address widening
+     the table in Outlook. */
+  const items = [['E', `<a href="mailto:${esc(d.email)}" style="color:${K.name}; text-decoration:none; font-weight:600; word-break:break-all;">${esc(mailLabel(d.email))}</a>`, Z.mail, Z.mailLh]];
+  if(d.phone) items.push(['P',  a(telHref(d.phone), d.phone, K.meta, 'white-space:nowrap;'), Z.meta, Z.metaLh]);
+  if(d.wa)    items.push(['WA', a(d.wa.href, 'WhatsApp', K.meta, 'white-space:nowrap;'), Z.meta, Z.metaLh]);
+  if(d.web)   items.push(['W',  a(d.web.href, d.web.label, K.meta, 'white-space:nowrap;'), Z.meta, Z.metaLh]);
+  if(d.li)    items.push(['LI', a(d.li.href, d.li.label, K.meta, 'white-space:nowrap;'), Z.meta, Z.metaLh]);
+  if(d.news)  items.push(['NL', a(d.news.href, d.news.label, K.meta, 'white-space:nowrap;'), Z.meta, Z.metaLh]);
+  if(d.yt)    items.push(['YT', a(d.yt.href, d.yt.label, K.meta, 'white-space:nowrap;'), Z.meta, Z.metaLh]);
+  const stack = items.map(([l, v, size, lh], i) =>
+    line(lab(l, v), size, lh, i === items.length - 1 ? 0 : 3)).join('');
 
   return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="${Z.w.imprint}" style="border-collapse:collapse; width:${Z.w.imprint}px; mso-table-lspace:0pt; mso-table-rspace:0pt;">
     <tr><td colspan="2" style="padding:0 0 2px 0; font-family:${SER}; font-size:${Z.name}px; line-height:${Z.nameLh}px; mso-line-height-rule:exactly; font-weight:bold; color:${K.name};">${esc(d.name)}</td></tr>
     <tr><td colspan="2" style="padding:0 0 12px 0; font-family:${SER}; font-style:italic; font-size:${Z.role}px; line-height:${Z.roleLh}px; mso-line-height-rule:exactly; color:${K.role};">${esc(d.role)}</td></tr>
-    ${mailCell(d, ' colspan="2"')}
     ${stack}
     ${meet?`<tr><td colspan="2" style="padding:7px 0 0 0; font-family:${S}; font-size:${Z.meta}px; line-height:${Z.metaLh}px; mso-line-height-rule:exactly;">${meet}</td></tr>`:''}
+    <tr><td colspan="2" style="padding:${sp}px 0 0 0;">${hruleInner(K.rule)}</td></tr>
     <tr>
-      <td valign="middle" width="${G}" style="width:${G}px; padding:${sp}px 8px 0 0;"><img src="${esc(d.logo)}" width="${G}" height="${G}" alt="" style="display:block; width:${G}px; height:${G}px; border:0; outline:none;"></td>
-      <td valign="middle" style="padding:${sp}px 0 0 0; white-space:nowrap;">${wordmark(Z.wordmk, 20)}</td>
+      <td valign="middle" width="${G}" style="width:${G}px; padding:12px 8px 0 0;"><img src="${esc(d.logo)}" width="${G}" height="${G}" alt="" style="display:block; width:${G}px; height:${G}px; border:0; outline:none;"></td>
+      <td valign="middle" style="padding:12px 0 0 0; white-space:nowrap;">${wordmark(Z.wordmk, 20)}</td>
     </tr>
     ${tag?`<tr><td colspan="2" style="padding:5px 0 0 0; font-family:${S}; font-size:${Z.tag}px; line-height:${Z.tagLh}px; mso-line-height-rule:exactly; font-weight:bold; letter-spacing:1.5px; text-transform:uppercase;">${tag}</td></tr>`:''}
   ${CLOSE}`;
